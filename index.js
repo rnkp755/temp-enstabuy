@@ -1,3 +1,4 @@
+const dotenv = require('dotenv');
 const express = require('express');
 const server = express();
 const mongoose = require('mongoose');
@@ -11,6 +12,9 @@ const authRouter = require('./routes/Auth');
 const cartRouter = require('./routes/Cart');
 const ordersRouter = require('./routes/Order');
 
+dotenv.config({
+    path: './.env'
+})
 //middlewares
 
 server.use(express.static('build'));
@@ -30,7 +34,7 @@ server.use('/orders', ordersRouter.router)
 main().catch(err => console.log(err));
 
 async function main() {
-    await mongoose.connect('mongodb+srv://enstabuy1:JG3s0BXyXb1ep12q@serverlessinstance0.orzz9o4.mongodb.net/');
+    await mongoose.connect(`${process.env.DB_URI}`);
     console.log('database connected')
 }
 
@@ -40,6 +44,6 @@ server.get('/', (req, res) => {
 
 
 server.post('/products', createProduct);
-server.listen(8080, () => {
+server.listen(`${process.env.PORT}`, () => {
     console.log('server started')
 })
