@@ -13,7 +13,10 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.19.2",
-    "mongoose": "^7.6.10"
+    "express-session": "^1.18.0",
+    "local": "^0.3.3",
+    "mongoose": "^7.6.10",
+    "passport": "^0.7.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.0"
