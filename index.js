@@ -3,6 +3,7 @@ const express = require('express');
 const server = express();
 const mongoose = require('mongoose');
 const cors = require('cors')
+const mime = require('mime-types');
 const { createProduct } = require('./controller/Product');
 const productsRouter = require('./routes/Products');
 const categoriesRouter = require('./routes/Categories');
@@ -17,7 +18,14 @@ dotenv.config({
 })
 //middlewares
 
-server.use(express.static('build'));
+server.use(express.static('build', {
+    setHeaders: function (res, path) {
+        const fileType = mime.lookup(path);
+        if (fileType) {
+            res.setHeader('Content-Type', fileType);
+        }
+    }
+}));
 
 server.use(cors({
     exposedHeaders: ['X-Total-Count']
